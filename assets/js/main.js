@@ -1,9 +1,12 @@
 const pokemonList = document.getElementById('pokemonList')
 const loadMoreButton = document.getElementById('loadMoreButton')
+const infoButton = document.getElementById('info')
 
 const maxRecords = 151
 const limit = 10
 let offset = 0;
+
+
 
 function convertPokemonToLi(pokemon) {
     return `
@@ -15,10 +18,11 @@ function convertPokemonToLi(pokemon) {
                 <ol class="types">
                     ${pokemon.types.map((type) => `<li class="type ${type}">${type}</li>`).join('')}
                 </ol>
-
+               
                 <img src="${pokemon.photo}"
                      alt="${pokemon.name}">
             </div>
+            <button  class="btninfo" title="Information"  type="button" onclick='getInformation(${JSON.stringify(pokemon)})'>i</button>
         </li>
     `
 }
@@ -31,6 +35,8 @@ function loadPokemonItens(offset, limit) {
 }
 
 loadPokemonItens(offset, limit)
+
+
 
 loadMoreButton.addEventListener('click', () => {
     offset += limit
@@ -45,3 +51,24 @@ loadMoreButton.addEventListener('click', () => {
         loadPokemonItens(offset, limit)
     }
 })
+
+
+function getInformation(pokemon) {
+  const modal = document.getElementById("pokemonModal");
+  const infoContainer = document.getElementById("pokemonInfo");
+
+  const content = `
+    <h3>${pokemon.name}</h3>
+    <p>ID: #${pokemon.number}</p>
+    <p>Type: ${pokemon.types}</p>
+    <img class="imageinfo" src="${pokemon.photo}" alt="${pokemon.name}" />
+  `;
+  infoContainer.innerHTML = content;
+
+  modal.style.display = "block";
+
+  const closeButton = document.querySelector(".close");
+  closeButton.addEventListener("click", function () {
+    modal.style.display = "none";
+  });
+}
