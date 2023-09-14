@@ -54,21 +54,31 @@ loadMoreButton.addEventListener('click', () => {
 
 
 function getInformation(pokemon) {
-  const modal = document.getElementById("pokemonModal");
-  const infoContainer = document.getElementById("pokemonInfo");
+    const modal = document.getElementById("pokemonModal");
+    const infoContainer = document.getElementById("pokemonInfo");
+    let type = pokemon.type
 
-  const content = `
+    const backgroundPokemon = document.querySelector('.pokemon .' + type)
+    const estiloPokemon = window.getComputedStyle(backgroundPokemon)
+    console.log(estiloPokemon.backgroundColor)
+    const backgroundColorPoke = estiloPokemon.backgroundColor
+
+    const content = `
     <h3>${pokemon.name}</h3>
-    <p>ID: #${pokemon.number}</p>
-    <p>Type: ${pokemon.types}</p>
+    <p>Experience: ${pokemon.experience}</p>
+    <p>Height: ${pokemon.height}</p>
+    <p>Weight: ${pokemon.weight}</p>
+
     <img class="imageinfo" src="${pokemon.photo}" alt="${pokemon.name}" />
   `;
-  infoContainer.innerHTML = content;
 
-  modal.style.display = "block";
+    infoContainer.innerHTML = content;
 
-  const closeButton = document.querySelector(".close");
-  closeButton.addEventListener("click", function () {
-    modal.style.display = "none";
-  });
+    document.querySelector('.modal-content').style.backgroundColor = backgroundColorPoke
+    modal.style.display = "block";
+
+    const closeButton = document.querySelector(".close");
+    closeButton.addEventListener("click", function () {
+        modal.style.display = "none";
+    });
 }
